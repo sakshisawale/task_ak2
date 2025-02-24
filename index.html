@@ -101,7 +101,7 @@
 
         function checkHiddenPassword() {
             let input = document.getElementById('hiddenPasswordInput').value;
-            let correctPassword = "Secrets";  // Cleaned up password (remove non-alphanumeric characters)
+            let correctPassword = "Secret";  // Cleaned up password (remove non-alphanumeric characters)
             if (input === correctPassword) {
                 document.getElementById('hiddenPasswordMessage').classList.remove('hidden');
                 setTimeout(() => nextChallenge(2), 1000);
