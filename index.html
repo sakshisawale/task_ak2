@@ -26,9 +26,10 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
     <div class="w-full max-w-4xl bg-[#1e2235] rounded-2xl shadow-lg p-8 flex flex-col gap-8">
-        <h1 class="text-6xl text-RED-400">The Animeverse</h1><br>
+            <h1 class="text-6xl text-RED-400">The Animeverse</h1><br>
         <h2 class="text-4xl text-purple-400">Decode & Escape</h2>
-
+        
+    
         <!-- Challenge 1 (Extract Hidden Information) -->
         <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
             <h2 class="text-2xl text-blue-400">Step 1: Extract Hidden Information</h2>
@@ -40,6 +41,8 @@
             <p id="regexMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="regexError" class="hidden text-yellow-400 mt-2">❌ Try again! </p>
             <div id="regexHint" class="hidden">Ignore consecutive duplicate characters and count them only once.</div>
+
+                
         </div>
 
         <!-- Challenge 2 (Hidden String Challenge) -->
@@ -81,49 +84,32 @@
     </div>
 
     <script>
-        // Load progress from localStorage
-        let currentChallenge = localStorage.getItem('currentChallenge') || 1;
-
-        // Show the current challenge on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            for (let i = 1; i <= 3; i++) {
-                if (i == currentChallenge) {
-                    document.getElementById(`challenge${i}`).classList.remove('hidden');
-                } else {
-                    document.getElementById(`challenge${i}`).classList.add('hidden');
-                }
-            }
-            if (currentChallenge == 4) {
-                document.getElementById('completionMessage').classList.remove('hidden');
-            }
-        });
-
         function nextChallenge(current) {
             document.getElementById(`challenge${current}`).classList.add('hidden');
             document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
-            localStorage.setItem('currentChallenge', current + 1); // Save progress
         }
 
-        function checkRegex() {
-            let input = document.getElementById('regexInput').value;
-            let correctAnswer = "3015303";  // Extracted digits from the string
-            let specialCase = "30011153303"; // Input that triggers the hint message
+      function checkRegex() {
+    let input = document.getElementById('regexInput').value;
+    let correctAnswer = "3015303";  // Extracted digits from the string
+    let specialCase = "30011153303"; // Input that triggers the hint message
 
-            if (input === correctAnswer) {
-                document.getElementById('regexMessage').classList.remove('hidden');
-                setTimeout(() => nextChallenge(1), 1000);
-            } else {
-                if (input === specialCase) {
-                    document.getElementById('regexHint').classList.remove('hidden'); // Show hint
-                } else {
-                    document.getElementById('regexError').classList.remove('hidden'); // Show error
-                }
-                setTimeout(() => {
-                    document.getElementById('regexError').classList.add('hidden');
-                    document.getElementById('regexHint').classList.add('hidden');
-                }, 2000);
-            }
+    if (input === correctAnswer) {
+        document.getElementById('regexMessage').classList.remove('hidden');
+        setTimeout(() => nextChallenge(1), 1000);
+    } else {
+        if (input === specialCase) {
+            document.getElementById('regexHint').classList.remove('hidden'); // Show hint
+        } else {
+            document.getElementById('regexError').classList.remove('hidden'); // Show error
         }
+        setTimeout(() => {
+            document.getElementById('regexError').classList.add('hidden');
+            document.getElementById('regexHint').classList.add('hidden');
+        }, 2000);
+    }
+}
+
 
         function checkHiddenPassword() {
             let input = document.getElementById('hiddenPasswordInput').value;
@@ -145,13 +131,14 @@
                 setTimeout(() => {
                     document.getElementById('challenge3').classList.add('hidden');
                     document.getElementById('completionMessage').classList.remove('hidden');
-                    localStorage.setItem('currentChallenge', 4); // Mark as completed
                 }, 1000);
             } else {
                 document.getElementById('keyError').classList.remove('hidden');
                 setTimeout(() => document.getElementById('keyError').classList.add('hidden'), 2000);
             }
         }
+
+        
     </script>
 </body>
 </html>
