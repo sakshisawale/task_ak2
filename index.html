@@ -28,6 +28,22 @@
             border: 1px solid #ff0000; /* Red border */
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
         }
+        /* Custom Submit Button Style */
+        .submit-button {
+            width: 120px; /* Minimized width */
+            background-color: #ff0000; /* Red background */
+            color: white; /* White text */
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 1px solid #ff0000; /* Red border */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .submit-button:hover {
+            background-color: #cc0000; /* Darker red on hover */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.9); /* Stronger red glow on hover */
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -45,7 +61,7 @@
             <p class="text-yellow-400 font-mono text-lg">H3ll0, w0r1d! Th1s 1s a te5t m3ssag3 with s0me hidden charact3rs.</p>
            
             <input type="text" id="regexInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden sequence">
-            <button class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkRegex()">Submit</button>
+            <button class="submit-button mx-auto mt-2" onclick="checkRegex()">Submit</button> <!-- Updated button -->
             <p id="regexMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="regexError" class="hidden text-yellow-400 mt-2">❌ Try again! </p>
             <div id="regexHint" class="hidden">Ignore consecutive duplicate characters and count them only once.</div>
@@ -66,7 +82,7 @@
            <p class="text-white text-xs">Refer regex pattern: <span class="font-mono text-sm">[A-Za-z]+</span></p>
         
             <input type="text" id="hiddenPasswordInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden password">
-            <button class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkHiddenPassword()">Submit</button>
+            <button class="submit-button mx-auto mt-2" onclick="checkHiddenPassword()">Submit</button> <!-- Updated button -->
             <p id="hiddenPasswordMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="hiddenPasswordError" class="hidden text-yellow-400 mt-2">❌ Try again!</p>
         </div>
@@ -78,7 +94,7 @@
             <a href="secret.html" class="text-red-400 underline">Go to secret file...</a>
 
             <input type="text" id="keyInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the key">
-            <button class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkKey()">Submit</button>
+            <button class="submit-button mx-auto mt-2" onclick="checkKey()">Submit</button> <!-- Updated button -->
             <p id="keyMessage" class="hidden text-green-400 mt-2">✅ Correct! You unlocked the vault!</p>
             <p id="keyError" class="hidden text-yellow-400 mt-2">❌ Wrong key! Try again.</p>
         </div>
