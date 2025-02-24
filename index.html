@@ -6,7 +6,7 @@
     <title>The Animeverse - Decode and Escape</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
         body {
             background-color: #000000; /* Black background */
             color: white;
@@ -22,11 +22,11 @@
             font-family: 'Courier New', monospace;
             margin: 20px;
             border: 1px solid #ff0000; /* Red border */
-            box-shadow: 0 0 10px #ff0000; /* Red glow */
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
         }
         .challenge-container {
             border: 1px solid #ff0000; /* Red border */
-            box-shadow: 0 0 10px #ff0000; /* Red glow */
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
         }
     </style>
 </head>
@@ -37,7 +37,7 @@
 
         <!-- Challenge 1 (Extract Hidden Information) -->
         <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
-            <h2 class="text-2xl text-red-400">Step 1: Extract Hidden Information</h2>
+            <h2 class="text-2xl text-blue-400">Step 1: Extract Hidden Information</h2>
             <p class="text-gray-300">You’ve stumbled upon a cryptic string. It's packed with clues, but some parts are harder to spot than others. Pay attention to what stands out. There’s something important <strong> embedded  </strong>within this text, and it’s not what you might expect.</p>
             <p class="text-yellow-400 font-mono text-lg">H3ll0, w0r1d! Th1s 1s a te5t m3ssag3 with s0me hidden charact3rs.</p>
            
@@ -50,7 +50,7 @@
 
         <!-- Challenge 2 (Hidden String Challenge) -->
         <div id="challenge2" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
-            <h2 class="text-2xl text-red-400">Step 2: The Glitch in the System</h2>
+            <h2 class="text-2xl text-blue-400">Step 2: The Glitch in the System</h2>
             <p class="text-gray-300">An unexpected glitch in the system has corrupted the string. Remove the non-alphanumeric characters to uncover the hidden password.</p>
              <!-- System Glitch Message -->
             <div class="glitch-message">
@@ -70,7 +70,7 @@
 
         <!-- Challenge 3 (Retrieve Secret Key) -->
         <div id="challenge3" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
-            <h2 class="text-2xl text-red-400">Step 3: Retrieve the Secret Key</h2>
+            <h2 class="text-2xl text-blue-400">Step 3: Retrieve the Secret Key</h2>
             <p class="text-gray-300">Click the reveal button to find the key. But beware of distractions!</p>
             <a href="secret.html" class="text-red-400 underline">Go to secret file...</a>
 
