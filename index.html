@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Encrypted Vault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Canva+Sans&display=swap');
+        body {
+            background-color: #161a2b;
+            color: white;
+            font-family: 'Canva Sans', sans-serif;
+            text-align: center;
+        }
+        .glitch-message {
+            background-color: #000;
+            color: white;
+            text-align: left;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-4xl bg-[#1e2235] rounded-2xl shadow-lg p-8 flex flex-col gap-8">
+        <h1 class="text-4xl text-purple-400">Decode & Escape</h1>
+        
+    
+        <!-- Challenge 1 (Extract Hidden Information) -->
+        <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
+            <h2 class="text-2xl text-blue-400">Step 1: Extract Hidden Information</h2>
+            <p class="text-gray-300">You’ve stumbled upon a cryptic string. It's packed with clues, but some parts are harder to spot than others. Pay attention to what stands out. There’s something important <strong> embedded  </strong>within this text, and it’s not what you might expect.</p>
+            <p class="text-yellow-400 font-mono text-lg">H3ll0, w0r1d! Th1s 1s a te5t m3ssag3 with s0me hidden charact3rs.</p>
+           
+            <input type="text" id="regexInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden sequence">
+            <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkRegex()">Submit</button>
+            <p id="regexMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
+            <p id="regexError" class="hidden text-yellow-400 mt-2">❌ Try again! <BR>Player, remember there is uniqueness...</p>
+                
+        </div>
+
+        <!-- Challenge 2 (Hidden String Challenge) -->
+        <div id="challenge2" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
+            <h2 class="text-2xl text-blue-400">Step 2: The Glitch in the System</h2>
+            <p class="text-gray-300">An unexpected glitch in the system has corrupted the string. Remove the non-alphanumeric characters to uncover the hidden password.</p>
+             <!-- System Glitch Message -->
+            <div class="glitch-message">
+            <h2 class="text-xl font-bold">[INFO] SYSTEM GLITCH DETECTED:</h2>
+            <p>Searching for hidden sequence...</p>
+            <p class="text-red-500">ERROR: String corrupted! Possible hidden message: <strong>"S#@3e!5tE@c*rE1t#"</strong></p>
+            <p>[ERROR] Failed to recover the hidden sequence!</p>
+            <p>[INFO] Initiating manual repair. Please fix the error and proceed.</p>
+           </div>
+           <p class="text-white text-xs">Refer regex pattern: <span class="font-mono text-sm">[^A-Za-z0-9]</span></p>
+        
+            <input type="text" id="hiddenPasswordInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden password">
+            <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkHiddenPassword()">Submit</button>
+            <p id="hiddenPasswordMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
+            <p id="hiddenPasswordError" class="hidden text-yellow-400 mt-2">❌ Try again!</p>
+        </div>
+
+        <!-- Challenge 3 (Retrieve Secret Key) -->
+        <div id="challenge3" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
+            <h2 class="text-2xl text-blue-400">Step 3: Retrieve the Secret Key</h2>
+            <p class="text-gray-300">Click the reveal button to find the key. But beware of distractions!</p>
+            <a href="secret.html" class="text-purple-400 underline">Go to secret file...</a>
+
+          <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkKey()">Submit</button>
+            <p id="keyMessage" class="hidden text-green-400 mt-2">✅ Correct! You unlocked the vault!</p>
+            <p id="keyError" class="hidden text-yellow-400 mt-2">❌ Wrong key! Try again.</p>
+        </div>
+
+    </div>
+
+    <script>
+        function nextChallenge(current) {
+            document.getElementById(`challenge${current}`).classList.add('hidden');
+            document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
+        }
+
+        function checkRegex() {
+            let input = document.getElementById('regexInput').value;
+            let correctAnswer = "3015303";  // Extracted digits from the string
+            if (input === correctAnswer) {
+                document.getElementById('regexMessage').classList.remove('hidden');
+                setTimeout(() => nextChallenge(1), 1000);
+            } else {
+                document.getElementById('regexError').classList.remove('hidden');
+                setTimeout(() => document.getElementById('regexError' || 'note').classList.add('hidden'), 2000);
+            }
+
+        }
+
+        function checkHiddenPassword() {
+            let input = document.getElementById('hiddenPasswordInput').value;
+            let correctPassword = "Secrets";  // Cleaned up password (remove non-alphanumeric characters)
+            if (input === correctPassword) {
+                document.getElementById('hiddenPasswordMessage').classList.remove('hidden');
+                setTimeout(() => nextChallenge(2), 1000);
+            } else {
+                document.getElementById('hiddenPasswordError').classList.remove('hidden');
+                setTimeout(() => document.getElementById('hiddenPasswordError').classList.add('hidden'), 2000);
+            }
+        }
+
+        function checkKey() {
+            let answer = document.getElementById('keyInput').value;
+            let secretKey = "HIDDENKEY";
+            if (answer === secretKey) {
+                document.getElementById('keyMessage').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('challenge3').classList.add('hidden');
+                    document.getElementById('completionMessage').classList.remove('hidden');
+                }, 1000);
+            } else {
+                document.getElementById('keyError').classList.remove('hidden');
+                setTimeout(() => document.getElementById('keyError').classList.add('hidden'), 2000);
+            }
+        }
+
+        
+    </script>
+</body>
+</html>
