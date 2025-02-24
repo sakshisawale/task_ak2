@@ -53,7 +53,7 @@
             <div class="glitch-message">
             <h2 class="text-xl font-bold">[INFO] SYSTEM GLITCH DETECTED:</h2>
             <p>Searching for hidden sequence...</p>
-            <p class="text-red-500">ERROR: String corrupted! Possible hidden message: <strong>"S#@3e!5@c*r&e1t#"</strong></p>
+            <p class="text-red-500">ERROR: String corrupted! Possible hidden message: <strong>"M#@3y!5@s*t&e1r#y"</strong></p>
             <p>[ERROR] Failed to recover the hidden sequence!</p>
             <p>[INFO] Initiating manual repair. Please fix the error and proceed.</p>
            </div>
@@ -113,7 +113,7 @@
 
         function checkHiddenPassword() {
             let input = document.getElementById('hiddenPasswordInput').value;
-            let correctPassword = "Secret";  // Cleaned up password (remove non-alphanumeric characters)
+            let correctPassword = "Mystery";  // Cleaned up password (remove non-alphanumeric characters)
             if (input === correctPassword) {
                 document.getElementById('hiddenPasswordMessage').classList.remove('hidden');
                 setTimeout(() => nextChallenge(2), 1000);
