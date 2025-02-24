@@ -26,49 +26,36 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
     <div class="w-full max-w-4xl bg-[#1e2235] rounded-2xl shadow-lg p-8 flex flex-col gap-8">
-            <h1 class="text-6xl text-RED-400">The Animeverse</h1><br>
+        <h1 class="text-6xl text-red-400">The Animeverse</h1>
         <h2 class="text-4xl text-purple-400">Decode & Escape</h2>
         
-    
-        <!-- Challenge 1 (Extract Hidden Information) -->
+        <!-- Challenge 1 -->
         <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
             <h2 class="text-2xl text-blue-400">Step 1: Extract Hidden Information</h2>
-            <p class="text-gray-300">You’ve stumbled upon a cryptic string. It's packed with clues, but some parts are harder to spot than others. Pay attention to what stands out. There’s something important <strong> embedded  </strong>within this text, and it’s not what you might expect.</p>
             <p class="text-yellow-400 font-mono text-lg">H3ll0, w0r1d! Th1s 1s a te5t m3ssag3 with s0me hidden charact3rs.</p>
            
             <input type="text" id="regexInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden sequence">
             <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkRegex()">Submit</button>
             <p id="regexMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="regexError" class="hidden text-yellow-400 mt-2">❌ Try again! </p>
-            <div id="regexHint" class="hidden">Ignore consecutive duplicate characters and count them only once.</div>
-
-                
         </div>
 
-        <!-- Challenge 2 (Hidden String Challenge) -->
+        <!-- Challenge 2 -->
         <div id="challenge2" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
             <h2 class="text-2xl text-blue-400">Step 2: The Glitch in the System</h2>
-            <p class="text-gray-300">An unexpected glitch in the system has corrupted the string. Remove the non-alphanumeric characters to uncover the hidden password.</p>
-             <!-- System Glitch Message -->
-            <div class="glitch-message">
-            <h2 class="text-xl font-bold">[INFO] SYSTEM GLITCH DETECTED:</h2>
-            <p>Searching for hidden sequence...</p>
-            <p class="text-red-500">ERROR: String corrupted! Possible hidden message: <strong>"S#@3e!5@c*r&e1t#"</strong></p>
-            <p>[ERROR] Failed to recover the hidden sequence!</p>
-            <p>[INFO] Initiating manual repair. Please fix the error and proceed.</p>
-           </div>
-           <p class="text-white text-xs">Refer regex pattern: <span class="font-mono text-sm">[A-Za-z]+</span></p>
-        
+            <p class="text-gray-300">Remove non-alphanumeric characters to uncover the hidden password.</p>
+            <p class="text-red-500">ERROR: Corrupted Message - "S#@3e!5@c*r&e1t#"</p>
+
             <input type="text" id="hiddenPasswordInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden password">
             <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkHiddenPassword()">Submit</button>
             <p id="hiddenPasswordMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="hiddenPasswordError" class="hidden text-yellow-400 mt-2">❌ Try again!</p>
         </div>
 
-        <!-- Challenge 3 (Retrieve Secret Key) -->
+        <!-- Challenge 3 -->
         <div id="challenge3" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
             <h2 class="text-2xl text-blue-400">Step 3: Retrieve the Secret Key</h2>
-            <p class="text-gray-300">Click the reveal button to find the key. But beware of distractions!</p>
+            <p class="text-gray-300">Click the reveal button to find the key.</p>
             <a href="secret.html" class="text-purple-400 underline">Go to secret file...</a>
 
             <input type="text" id="keyInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the key">
@@ -78,42 +65,49 @@
         </div>
 
         <!-- Completion Message -->
-        <div id="completionMessage" class="hidden 600 p-6 rounded-lg text-white text-lg">
-            🎉 Congratulations! You have successfully completed all challenges and unlocked the encrypted vault! <BR><strong>FINAL KEY: THEVAULT</strong> 🎉 
+        <div id="completionMessage" class="hidden p-6 rounded-lg text-white text-lg">
+            🎉 Congratulations! You unlocked the encrypted vault! <br><strong>FINAL KEY: THEVAULT</strong> 🎉 
        </div>
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let savedChallenge = localStorage.getItem("currentChallenge");
+            if (savedChallenge) {
+                showChallenge(parseInt(savedChallenge));
+            }
+        });
+
+        function showChallenge(challengeNumber) {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`challenge${i}`).classList.add('hidden');
+            }
+            document.getElementById(`challenge${challengeNumber}`).classList.remove('hidden');
+            localStorage.setItem("currentChallenge", challengeNumber);
+        }
+
         function nextChallenge(current) {
-            document.getElementById(`challenge${current}`).classList.add('hidden');
-            document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
+            let next = current + 1;
+            showChallenge(next);
         }
 
-      function checkRegex() {
-    let input = document.getElementById('regexInput').value;
-    let correctAnswer = "3015303";  // Extracted digits from the string
-    let specialCase = "30011153303"; // Input that triggers the hint message
+        function checkRegex() {
+            let input = document.getElementById('regexInput').value;
+            let correctAnswer = "3015303";  
 
-    if (input === correctAnswer) {
-        document.getElementById('regexMessage').classList.remove('hidden');
-        setTimeout(() => nextChallenge(1), 1000);
-    } else {
-        if (input === specialCase) {
-            document.getElementById('regexHint').classList.remove('hidden'); // Show hint
-        } else {
-            document.getElementById('regexError').classList.remove('hidden'); // Show error
+            if (input === correctAnswer) {
+                document.getElementById('regexMessage').classList.remove('hidden');
+                setTimeout(() => nextChallenge(1), 1000);
+            } else {
+                document.getElementById('regexError').classList.remove('hidden');
+                setTimeout(() => document.getElementById('regexError').classList.add('hidden'), 2000);
+            }
         }
-        setTimeout(() => {
-            document.getElementById('regexError').classList.add('hidden');
-            document.getElementById('regexHint').classList.add('hidden');
-        }, 2000);
-    }
-}
-
 
         function checkHiddenPassword() {
             let input = document.getElementById('hiddenPasswordInput').value;
-            let correctPassword = "Secret";  // Cleaned up password (remove non-alphanumeric characters)
+            let correctPassword = "Secret";
+
             if (input === correctPassword) {
                 document.getElementById('hiddenPasswordMessage').classList.remove('hidden');
                 setTimeout(() => nextChallenge(2), 1000);
@@ -126,19 +120,19 @@
         function checkKey() {
             let answer = document.getElementById('keyInput').value;
             let secretKey = "HIDDENKEY";
+
             if (answer === secretKey) {
                 document.getElementById('keyMessage').classList.remove('hidden');
                 setTimeout(() => {
                     document.getElementById('challenge3').classList.add('hidden');
                     document.getElementById('completionMessage').classList.remove('hidden');
+                    localStorage.removeItem("currentChallenge");
                 }, 1000);
             } else {
                 document.getElementById('keyError').classList.remove('hidden');
                 setTimeout(() => document.getElementById('keyError').classList.add('hidden'), 2000);
             }
         }
-
-        
     </script>
 </body>
 </html>
