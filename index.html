@@ -87,18 +87,27 @@
             document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
         }
 
-        function checkRegex() {
-            let input = document.getElementById('regexInput').value;
-            let correctAnswer = "3015303";  // Extracted digits from the string
-            if (input === correctAnswer) {
-                document.getElementById('regexMessage').classList.remove('hidden');
-                setTimeout(() => nextChallenge(1), 1000);
-            } else {
-                document.getElementById('regexError').classList.remove('hidden');
-                setTimeout(() => document.getElementById('regexError' || 'note').classList.add('hidden'), 2000);
-            }
+      function checkRegex() {
+    let input = document.getElementById('regexInput').value;
+    let correctAnswer = "3015303";  // Extracted digits from the string
+    let specialCase = "30011153303"; // Input that triggers the hint message
 
+    if (input === correctAnswer) {
+        document.getElementById('regexMessage').classList.remove('hidden');
+        setTimeout(() => nextChallenge(1), 1000);
+    } else {
+        if (input === specialCase) {
+            document.getElementById('regexHint').classList.remove('hidden'); // Show hint
+        } else {
+            document.getElementById('regexError').classList.remove('hidden'); // Show error
         }
+        setTimeout(() => {
+            document.getElementById('regexError').classList.add('hidden');
+            document.getElementById('regexHint').classList.add('hidden');
+        }, 2000);
+    }
+}
+
 
         function checkHiddenPassword() {
             let input = document.getElementById('hiddenPasswordInput').value;
