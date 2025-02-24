@@ -26,10 +26,9 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
     <div class="w-full max-w-4xl bg-[#1e2235] rounded-2xl shadow-lg p-8 flex flex-col gap-8">
-            <h1 class="text-6xl text-RED-400">The Animeverse</h1><br>
+        <h1 class="text-6xl text-RED-400">The Animeverse</h1><br>
         <h2 class="text-4xl text-purple-400">Decode & Escape</h2>
-        
-    
+
         <!-- Challenge 1 (Extract Hidden Information) -->
         <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
             <h2 class="text-2xl text-blue-400">Step 1: Extract Hidden Information</h2>
@@ -41,8 +40,6 @@
             <p id="regexMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="regexError" class="hidden text-yellow-400 mt-2">❌ Try again! </p>
             <div id="regexHint" class="hidden">Ignore consecutive duplicate characters and count them only once.</div>
-
-                
         </div>
 
         <!-- Challenge 2 (Hidden String Challenge) -->
@@ -51,13 +48,13 @@
             <p class="text-gray-300">An unexpected glitch in the system has corrupted the string. Remove the non-alphanumeric characters to uncover the hidden password.</p>
              <!-- System Glitch Message -->
             <div class="glitch-message">
-            <h2 class="text-xl font-bold">[INFO] SYSTEM GLITCH DETECTED:</h2>
-            <p>Searching for hidden sequence...</p>
-            <p class="text-red-500">ERROR: String corrupted! Possible hidden message: <strong>"M#@3y!5@s*t&e1r#y"</strong></p>
-            <p>[ERROR] Failed to recover the hidden sequence!</p>
-            <p>[INFO] Initiating manual repair. Please fix the error and proceed.</p>
-           </div>
-           <p class="text-white text-xs">Refer regex pattern: <span class="font-mono text-sm">[A-Za-z]+</span></p>
+                <h2 class="text-xl font-bold">[INFO] SYSTEM GLITCH DETECTED:</h2>
+                <p>Searching for hidden sequence...</p>
+                <p class="text-red-500">ERROR: String corrupted! Possible hidden message: <strong>"M#@3y!5@s*t&e1r#y"</strong></p>
+                <p>[ERROR] Failed to recover the hidden sequence!</p>
+                <p>[INFO] Initiating manual repair. Please fix the error and proceed.</p>
+            </div>
+            <p class="text-white text-xs">Refer regex pattern: <span class="font-mono text-sm">[A-Za-z]+</span></p>
         
             <input type="text" id="hiddenPasswordInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden password">
             <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkHiddenPassword()">Submit</button>
@@ -80,36 +77,59 @@
         <!-- Completion Message -->
         <div id="completionMessage" class="hidden 600 p-6 rounded-lg text-white text-lg">
             🎉 Congratulations! You have successfully completed all challenges and unlocked the encrypted vault! <BR><strong>FINAL KEY: THEVAULT</strong> 🎉 
-       </div>
+        </div>
     </div>
 
     <script>
+        // Load the current challenge from localStorage
+        let currentChallenge = localStorage.getItem('currentChallenge') || 1;
+
+        // Show the current challenge on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            showChallenge(currentChallenge);
+        });
+
+        function showChallenge(challengeNumber) {
+            // Hide all challenges
+            document.querySelectorAll('.challenge-container').forEach(challenge => {
+                challenge.classList.add('hidden');
+            });
+
+            // Show the current challenge
+            document.getElementById(`challenge${challengeNumber}`).classList.remove('hidden');
+
+            // If the challenge is the completion message, show it
+            if (challengeNumber === 'completion') {
+                document.getElementById('completionMessage').classList.remove('hidden');
+            }
+        }
+
         function nextChallenge(current) {
-            document.getElementById(`challenge${current}`).classList.add('hidden');
-            document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
+            // Save the next challenge to localStorage
+            localStorage.setItem('currentChallenge', current + 1);
+            showChallenge(current + 1);
         }
 
-      function checkRegex() {
-    let input = document.getElementById('regexInput').value;
-    let correctAnswer = "3015303";  // Extracted digits from the string
-    let specialCase = "30011153303"; // Input that triggers the hint message
+        function checkRegex() {
+            let input = document.getElementById('regexInput').value;
+            let correctAnswer = "3015303";  // Extracted digits from the string
+            let specialCase = "30011153303"; // Input that triggers the hint message
 
-    if (input === correctAnswer) {
-        document.getElementById('regexMessage').classList.remove('hidden');
-        setTimeout(() => nextChallenge(1), 1000);
-    } else {
-        if (input === specialCase) {
-            document.getElementById('regexHint').classList.remove('hidden'); // Show hint
-        } else {
-            document.getElementById('regexError').classList.remove('hidden'); // Show error
+            if (input === correctAnswer) {
+                document.getElementById('regexMessage').classList.remove('hidden');
+                setTimeout(() => nextChallenge(1), 1000);
+            } else {
+                if (input === specialCase) {
+                    document.getElementById('regexHint').classList.remove('hidden'); // Show hint
+                } else {
+                    document.getElementById('regexError').classList.remove('hidden'); // Show error
+                }
+                setTimeout(() => {
+                    document.getElementById('regexError').classList.add('hidden');
+                    document.getElementById('regexHint').classList.add('hidden');
+                }, 2000);
+            }
         }
-        setTimeout(() => {
-            document.getElementById('regexError').classList.add('hidden');
-            document.getElementById('regexHint').classList.add('hidden');
-        }, 2000);
-    }
-}
-
 
         function checkHiddenPassword() {
             let input = document.getElementById('hiddenPasswordInput').value;
@@ -129,6 +149,7 @@
             if (answer === secretKey) {
                 document.getElementById('keyMessage').classList.remove('hidden');
                 setTimeout(() => {
+                    localStorage.setItem('currentChallenge', 'completion'); // Save completion state
                     document.getElementById('challenge3').classList.add('hidden');
                     document.getElementById('completionMessage').classList.remove('hidden');
                 }, 1000);
@@ -137,8 +158,6 @@
                 setTimeout(() => document.getElementById('keyError').classList.add('hidden'), 2000);
             }
         }
-
-        
     </script>
 </body>
 </html>
