@@ -6,45 +6,51 @@
     <title>The Animeverse - Decode and Escape</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Canva+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
         body {
-            background-color: #161a2b;
+            background-color: #000000; /* Black background */
             color: white;
-            font-family: 'Canva Sans', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             text-align: center;
         }
         .glitch-message {
-            background-color: #000;
+            background-color: #1a1a1a; /* Dark gray background */
             color: white;
             text-align: left;
             padding: 20px;
             border-radius: 8px;
             font-family: 'Courier New', monospace;
             margin: 20px;
+            border: 1px solid #ff0000; /* Red border */
+            box-shadow: 0 0 10px #ff0000; /* Red glow */
+        }
+        .challenge-container {
+            border: 1px solid #ff0000; /* Red border */
+            box-shadow: 0 0 10px #ff0000; /* Red glow */
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-4xl bg-[#1e2235] rounded-2xl shadow-lg p-8 flex flex-col gap-8">
-        <h1 class="text-6xl text-RED-400">The Animeverse</h1><br>
-        <h2 class="text-4xl text-purple-400">Decode & Escape</h2>
+    <div class="w-full max-w-4xl bg-[#1a1a1a] rounded-2xl shadow-lg p-8 flex flex-col gap-8">
+        <h1 class="text-6xl text-red-500">The Animeverse</h1><br>
+        <h2 class="text-4xl text-red-400">Decode & Escape</h2>
 
         <!-- Challenge 1 (Extract Hidden Information) -->
-        <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
-            <h2 class="text-2xl text-blue-400">Step 1: Extract Hidden Information</h2>
+        <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
+            <h2 class="text-2xl text-red-400">Step 1: Extract Hidden Information</h2>
             <p class="text-gray-300">You’ve stumbled upon a cryptic string. It's packed with clues, but some parts are harder to spot than others. Pay attention to what stands out. There’s something important <strong> embedded  </strong>within this text, and it’s not what you might expect.</p>
             <p class="text-yellow-400 font-mono text-lg">H3ll0, w0r1d! Th1s 1s a te5t m3ssag3 with s0me hidden charact3rs.</p>
            
             <input type="text" id="regexInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden sequence">
-            <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkRegex()">Submit</button>
+            <button class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkRegex()">Submit</button>
             <p id="regexMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="regexError" class="hidden text-yellow-400 mt-2">❌ Try again! </p>
             <div id="regexHint" class="hidden">Ignore consecutive duplicate characters and count them only once.</div>
         </div>
 
         <!-- Challenge 2 (Hidden String Challenge) -->
-        <div id="challenge2" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
-            <h2 class="text-2xl text-blue-400">Step 2: The Glitch in the System</h2>
+        <div id="challenge2" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
+            <h2 class="text-2xl text-red-400">Step 2: The Glitch in the System</h2>
             <p class="text-gray-300">An unexpected glitch in the system has corrupted the string. Remove the non-alphanumeric characters to uncover the hidden password.</p>
              <!-- System Glitch Message -->
             <div class="glitch-message">
@@ -57,19 +63,19 @@
            <p class="text-white text-xs">Refer regex pattern: <span class="font-mono text-sm">[A-Za-z]+</span></p>
         
             <input type="text" id="hiddenPasswordInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden password">
-            <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkHiddenPassword()">Submit</button>
+            <button class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkHiddenPassword()">Submit</button>
             <p id="hiddenPasswordMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="hiddenPasswordError" class="hidden text-yellow-400 mt-2">❌ Try again!</p>
         </div>
 
         <!-- Challenge 3 (Retrieve Secret Key) -->
-        <div id="challenge3" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-purple-500 shadow-md">
-            <h2 class="text-2xl text-blue-400">Step 3: Retrieve the Secret Key</h2>
+        <div id="challenge3" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
+            <h2 class="text-2xl text-red-400">Step 3: Retrieve the Secret Key</h2>
             <p class="text-gray-300">Click the reveal button to find the key. But beware of distractions!</p>
-            <a href="secret.html" class="text-purple-400 underline">Go to secret file...</a>
+            <a href="secret.html" class="text-red-400 underline">Go to secret file...</a>
 
             <input type="text" id="keyInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the key">
-            <button class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkKey()">Submit</button>
+            <button class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg mt-2" onclick="checkKey()">Submit</button>
             <p id="keyMessage" class="hidden text-green-400 mt-2">✅ Correct! You unlocked the vault!</p>
             <p id="keyError" class="hidden text-yellow-400 mt-2">❌ Wrong key! Try again.</p>
         </div>
