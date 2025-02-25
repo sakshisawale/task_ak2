@@ -7,12 +7,31 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        
+        /* Background image for the entire page */
         body {
-            background-color: #000000; /* Black background */
+            background-image: url('BG.jpg'); /* Replace with your image URL */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-attachment: fixed; /* Fix the background while scrolling */
             color: white;
             font-family: 'Open Sans', sans-serif;
             text-align: center;
         }
+
+        /* Dark overlay to make text readable */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black overlay */
+            z-index: -1; /* Place it behind the content */
+        }
+
         .glitch-message {
             background-color: #1a1a1a; /* Dark gray background */
             color: white;
@@ -24,10 +43,15 @@
             border: 1px solid #ff0000; /* Red border */
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
         }
+
         .challenge-container {
+            background-color: #000000; /* Black background */
             border: 1px solid #ff0000; /* Red border */
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
+            padding: 20px;
+            border-radius: 8px;
         }
+
         /* Custom Submit Button Style */
         .submit-button {
             width: 120px; /* Minimized width */
@@ -40,23 +64,48 @@
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
+
         .submit-button:hover {
+            background-color: #cc0000; /* Darker red on hover */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.9); /* Stronger red glow on hover */
+        }
+
+        .main-container {
+            border: 2px solid #ff0000; /* Red border */
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7); /* Red glow */
+            border-radius: 16px;
+            background-color: #1a1a1a; /* Dark gray background for the main container */
+        }
+
+        .start-button {
+            background-color: #ff0000; /* Red background */
+            color: white; /* White text */
+            font-weight: bold;
+            padding: 15px 30px;
+            border: 1px solid #ff0000; /* Red border */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red glow */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .start-button:hover {
             background-color: #cc0000; /* Darker red on hover */
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.9); /* Stronger red glow on hover */
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-4xl bg-[#1a1a1a] rounded-2xl shadow-lg p-8 flex flex-col gap-8">
-        <!-- Heading Section -->
-        <div id="headingSection">
+    <div class="w-full max-w-4xl bg-[#1a1a1a] rounded-2xl shadow-lg p-8 flex flex-col gap-8 main-container">
+        <!-- Initial Page -->
+        <div id="initialPage">
             <h1 class="text-5xl text-white mb-2">The Animeverse</h1>
             <h2 class="text-3xl text-red-400">Decode & Escape</h2>
+            <button class="start-button mx-auto mt-6" onclick="startChallenge()">Start</button>
         </div>
 
         <!-- Challenge 1 (Extract Hidden Information) -->
-        <div id="challenge1" class="challenge-container bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
-            <h2 class="text-2xl text-blue-400">Step 1: Extract Hidden Information</h2>
+        <div id="challenge1" class="challenge-container hidden">
+            <h2 class="text-2xl text-white">Step 1: Extract Hidden Information</h2>
             <p class="text-gray-300">You’ve stumbled upon a cryptic string. It's packed with clues, but some parts are harder to spot than others. Pay attention to what stands out. There’s something important <strong> embedded  </strong>within this text, and it’s not what you might expect.</p>
             <p class="text-yellow-400 font-mono text-lg">H3ll0, w0r1d! Th1s 1s a te5t m3ssag3 with s0me hidden charact3rs.</p>
            
@@ -68,8 +117,8 @@
         </div>
 
         <!-- Challenge 2 (Hidden String Challenge) -->
-        <div id="challenge2" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
-            <h2 class="text-2xl text-blue-400">Step 2: The Glitch in the System</h2>
+        <div id="challenge2" class="challenge-container hidden">
+            <h2 class="text-2xl text-white">Step 2: The Glitch in the System</h2>
             <p class="text-gray-300">An unexpected glitch in the system has corrupted the string. Remove the non-alphanumeric characters to uncover the hidden password.</p>
              <!-- System Glitch Message -->
             <div class="glitch-message">
@@ -88,8 +137,8 @@
         </div>
 
         <!-- Challenge 3 (Retrieve Secret Key) -->
-        <div id="challenge3" class="challenge-container hidden bg-[#2a2f47] p-6 rounded-lg border border-red-500 shadow-md">
-            <h2 class="text-2xl text-blue-400">Step 3: Retrieve the Secret Key</h2>
+        <div id="challenge3" class="challenge-container hidden">
+            <h2 class="text-2xl text-white">Step 3: Retrieve the Secret Key</h2>
             <p class="text-gray-300">Click the reveal button to find the key. But beware of distractions!</p>
             <a href="secret.html" class="text-red-400 underline">Go to secret file...</a>
 
@@ -111,26 +160,36 @@
 
         // Show the current challenge on page load
         document.addEventListener('DOMContentLoaded', () => {
-            for (let i = 1; i <= 3; i++) {
-                if (i == currentChallenge) {
-                    document.getElementById(`challenge${i}`).classList.remove('hidden');
-                } else {
-                    document.getElementById(`challenge${i}`).classList.add('hidden');
-                }
+            if (currentChallenge == 1) {
+                // Show the initial page if no progress is saved
+                document.getElementById('initialPage').classList.remove('hidden');
+            } else {
+                // Hide the initial page and show the current challenge
+                document.getElementById('initialPage').classList.add('hidden');
+                document.getElementById(`challenge${currentChallenge}`).classList.remove('hidden');
             }
+
             if (currentChallenge == 4) {
-                // Hide the heading section and show the completion message
-                document.getElementById('headingSection').classList.add('hidden');
+                // Show the completion message if all challenges are completed
                 document.getElementById('completionMessage').classList.remove('hidden');
             }
         });
 
+        // Function to start the challenge
+        function startChallenge() {
+            document.getElementById('initialPage').classList.add('hidden');
+            document.getElementById('challenge1').classList.remove('hidden');
+            localStorage.setItem('currentChallenge', 1); // Save progress
+        }
+
+        // Function to move to the next challenge
         function nextChallenge(current) {
             document.getElementById(`challenge${current}`).classList.add('hidden');
             document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
             localStorage.setItem('currentChallenge', current + 1); // Save progress
         }
 
+        // Function to check the regex input
         function checkRegex() {
             let input = document.getElementById('regexInput').value;
             let correctAnswer = "3015303";  // Extracted digits from the string
@@ -152,6 +211,7 @@
             }
         }
 
+        // Function to check the hidden password
         function checkHiddenPassword() {
             let input = document.getElementById('hiddenPasswordInput').value;
             let correctPassword = "Mystery";  // Cleaned up password (remove non-alphanumeric characters)
@@ -164,6 +224,7 @@
             }
         }
 
+        // Function to check the secret key
         function checkKey() {
             let answer = document.getElementById('keyInput').value;
             let secretKey = "HIDDENKEY";
@@ -172,7 +233,6 @@
                 setTimeout(() => {
                     // Hide all challenges and the heading section
                     document.getElementById('challenge3').classList.add('hidden');
-                    document.getElementById('headingSection').classList.add('hidden');
                     // Show the completion message
                     document.getElementById('completionMessage').classList.remove('hidden');
                     localStorage.setItem('currentChallenge', 4); // Mark as completed
