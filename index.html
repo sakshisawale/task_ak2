@@ -156,7 +156,7 @@
 
     <script>
         // Load progress from localStorage
-        let currentChallenge = localStorage.getItem('currentChallenge') || 1;
+      //  let currentChallenge = localStorage.getItem('currentChallenge') || 1;
 
         // Show the current challenge on page load
         document.addEventListener('DOMContentLoaded', () => {
@@ -186,7 +186,7 @@
         function nextChallenge(current) {
             document.getElementById(`challenge${current}`).classList.add('hidden');
             document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
-            localStorage.setItem('currentChallenge', current + 1); // Save progress
+           // localStorage.setItem('currentChallenge', current + 1); // Save progress
         }
 
         // Function to check the regex input
@@ -235,7 +235,7 @@
                     document.getElementById('challenge3').classList.add('hidden');
                     // Show the completion message
                     document.getElementById('completionMessage').classList.remove('hidden');
-                    localStorage.setItem('currentChallenge', 4); // Mark as completed
+                   // localStorage.setItem('currentChallenge', 4); // Mark as completed
                 }, 1000);
             } else {
                 document.getElementById('keyError').classList.remove('hidden');
