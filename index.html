@@ -109,10 +109,11 @@
             <p class="text-gray-300">You’ve stumbled upon a cryptic string. It's packed with clues, but some parts are harder to spot than others. Pay attention to what stands out. There’s something important <strong> embedded  </strong>within this text, and it’s not what you might expect.</p>
             <p class="text-yellow-400 font-mono text-lg">H3ll0, w0r1d! Th1s 1s a te5t m3ssag3 with s0me hidden charact3rs.</p>
            
-            <input type="text" id="regexInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden sequence">
+            <input type="text" id="regexInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden sequence" required>
             <button class="submit-button mx-auto mt-2" onclick="checkRegex()">Submit</button> <!-- Updated button -->
             <p id="regexMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="regexError" class="hidden text-yellow-400 mt-2">❌ Try again! </p>
+            <p id="regexRequired" class="hidden text-red-400 mt-2">⚠️ Please enter a value!</p>
             <div id="regexHint" class="hidden">Ignore consecutive duplicate characters and count them only once.</div>
         </div>
 
@@ -130,10 +131,11 @@
            </div>
            <p class="text-white text-xs">Refer regex pattern: <span class="font-mono text-sm">[A-Za-z]+</span></p>
         
-            <input type="text" id="hiddenPasswordInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden password">
+            <input type="text" id="hiddenPasswordInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the hidden password" required>
             <button class="submit-button mx-auto mt-2" onclick="checkHiddenPassword()">Submit</button> <!-- Updated button -->
             <p id="hiddenPasswordMessage" class="hidden text-green-400 mt-2">✅ Correct! Moving to next level.</p>
             <p id="hiddenPasswordError" class="hidden text-yellow-400 mt-2">❌ Try again!</p>
+            <p id="hiddenPasswordRequired" class="hidden text-red-400 mt-2">⚠️ Please enter a value!</p>
         </div>
 
         <!-- Challenge 3 (Retrieve Secret Key) -->
@@ -142,10 +144,11 @@
             <p class="text-gray-300">Click the reveal button to find the key. But beware of distractions!</p>
             <a href="secret.html" class="text-red-400 underline">Go to secret file...</a>
 
-            <input type="text" id="keyInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the key">
+            <input type="text" id="keyInput" class="p-2 mt-4 w-full rounded text-black" placeholder="Enter the key" required>
             <button class="submit-button mx-auto mt-2" onclick="checkKey()">Submit</button> <!-- Updated button -->
             <p id="keyMessage" class="hidden text-green-400 mt-2">✅ Correct! You unlocked the vault!</p>
             <p id="keyError" class="hidden text-yellow-400 mt-2">❌ Wrong key! Try again.</p>
+            <p id="keyRequired" class="hidden text-red-400 mt-2">⚠️ Please enter a value!</p>
         </div>
 
         <!-- Completion Message -->
@@ -155,42 +158,56 @@
     </div>
 
     <script>
-        // Check sessionStorage to see if the user was on Challenge 3
+        // Check sessionStorage to see which challenge the user was on
         document.addEventListener('DOMContentLoaded', () => {
             const currentChallenge = sessionStorage.getItem('currentChallenge');
 
-            if (currentChallenge === '3') {
-                // If the user was on Challenge 3, show Challenge 3
-                document.getElementById('initialPage').classList.add('hidden');
-                document.getElementById('challenge3').classList.remove('hidden');
+            if (currentChallenge === '1') {
+                showChallenge(1);
+            } else if (currentChallenge === '2') {
+                showChallenge(2);
+            } else if (currentChallenge === '3') {
+                showChallenge(3);
             } else {
-                // Otherwise, show the initial page
+                // If no challenge is stored, show the initial page
                 document.getElementById('initialPage').classList.remove('hidden');
             }
         });
 
+        // Function to show a specific challenge
+        function showChallenge(challengeNumber) {
+            document.getElementById('initialPage').classList.add('hidden');
+            document.getElementById('challenge1').classList.add('hidden');
+            document.getElementById('challenge2').classList.add('hidden');
+            document.getElementById('challenge3').classList.add('hidden');
+            document.getElementById(`challenge${challengeNumber}`).classList.remove('hidden');
+        }
+
         // Function to start the challenge
         function startChallenge() {
-            document.getElementById('initialPage').classList.add('hidden');
-            document.getElementById('challenge1').classList.remove('hidden');
+            sessionStorage.setItem('currentChallenge', '1');
+            showChallenge(1);
         }
 
         // Function to move to the next challenge
         function nextChallenge(current) {
-            document.getElementById(`challenge${current}`).classList.add('hidden');
-            document.getElementById(`challenge${current + 1}`).classList.remove('hidden');
-
-            // Save the current challenge to sessionStorage
-            if (current + 1 === 3) {
-                sessionStorage.setItem('currentChallenge', '3');
-            }
+            const nextChallengeNumber = current + 1;
+            sessionStorage.setItem('currentChallenge', nextChallengeNumber.toString());
+            showChallenge(nextChallengeNumber);
         }
 
         // Function to check the regex input
         function checkRegex() {
-            let input = document.getElementById('regexInput').value;
-            let correctAnswer = "3015303";  // Extracted digits from the string
-            let specialCase = "30011153303"; // Input that triggers the hint message
+            const input = document.getElementById('regexInput').value.trim();
+            const correctAnswer = "3015303";  // Extracted digits from the string
+            const specialCase = "30011153303"; // Input that triggers the hint message
+
+            // Check if input is empty
+            if (!input) {
+                document.getElementById('regexRequired').classList.remove('hidden');
+                setTimeout(() => document.getElementById('regexRequired').classList.add('hidden'), 2000);
+                return;
+            }
 
             if (input === correctAnswer) {
                 document.getElementById('regexMessage').classList.remove('hidden');
@@ -210,8 +227,16 @@
 
         // Function to check the hidden password
         function checkHiddenPassword() {
-            let input = document.getElementById('hiddenPasswordInput').value;
-            let correctPassword = "Mystery";  // Cleaned up password (remove non-alphanumeric characters)
+            const input = document.getElementById('hiddenPasswordInput').value.trim();
+            const correctPassword = "Mystery";  // Cleaned up password (remove non-alphanumeric characters)
+
+            // Check if input is empty
+            if (!input) {
+                document.getElementById('hiddenPasswordRequired').classList.remove('hidden');
+                setTimeout(() => document.getElementById('hiddenPasswordRequired').classList.add('hidden'), 2000);
+                return;
+            }
+
             if (input === correctPassword) {
                 document.getElementById('hiddenPasswordMessage').classList.remove('hidden');
                 setTimeout(() => nextChallenge(2), 1000);
@@ -223,8 +248,16 @@
 
         // Function to check the secret key
         function checkKey() {
-            let answer = document.getElementById('keyInput').value;
-            let secretKey = "HIDDENKEY";
+            const answer = document.getElementById('keyInput').value.trim();
+            const secretKey = "HIDDENKEY";
+
+            // Check if input is empty
+            if (!answer) {
+                document.getElementById('keyRequired').classList.remove('hidden');
+                setTimeout(() => document.getElementById('keyRequired').classList.add('hidden'), 2000);
+                return;
+            }
+
             if (answer === secretKey) {
                 document.getElementById('keyMessage').classList.remove('hidden');
                 setTimeout(() => {
